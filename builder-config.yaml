@@ -1,0 +1,37 @@
+replaces:
+  - "github.com/open-telemetry/opentelemetry-tutorials/smart-data/smartdata => ./receiver/smartdata"
+
+dist:
+  name: azl-otelcol
+  description: Azure Linux OpenTelemetry Collector Distribution
+  output_path: ./azl-otelcol
+
+extensions:
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/extension/azureauthextension v0.123.0
+
+exporters:
+  - gomod: go.opentelemetry.io/collector/exporter/debugexporter v0.123.0
+  - gomod: go.opentelemetry.io/collector/exporter/otlpexporter v0.123.0
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/exporter/fileexporter v0.123.0
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/exporter/azuredataexplorerexporter v0.123.0
+
+processors:
+  - gomod: go.opentelemetry.io/collector/processor/batchprocessor v0.123.0
+  - gomod: go.opentelemetry.io/collector/processor/memorylimiterprocessor v0.123.0
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/processor/attributesprocessor v0.123.0
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/processor/filterprocessor v0.123.0
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/processor/resourcedetectionprocessor v0.123.0
+
+receivers:
+  - gomod: go.opentelemetry.io/collector/receiver/otlpreceiver v0.123.0
+  - gomod: github.com/open-telemetry/opentelemetry-tutorials/smart-data/smartdata v0.0.0
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/receiver/filelogreceiver v0.123.0
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/receiver/hostmetricsreceiver v0.123.0
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/receiver/journaldreceiver v0.123.0
+
+providers:
+  - gomod: go.opentelemetry.io/collector/confmap/provider/envprovider v1.18.0
+  - gomod: go.opentelemetry.io/collector/confmap/provider/fileprovider v1.18.0
+  - gomod: go.opentelemetry.io/collector/confmap/provider/httpprovider v1.18.0
+  - gomod: go.opentelemetry.io/collector/confmap/provider/httpsprovider v1.18.0
+  - gomod: go.opentelemetry.io/collector/confmap/provider/yamlprovider v1.18.0
