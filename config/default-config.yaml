@@ -6,11 +6,8 @@ receivers:
   smartdata:
     interval: 60m
   filelog:
-    include: [/var/lib/azurelinux/*.log]
+    include: [/var/log/azurelinux/**]
     start_at: beginning
-    operators:
-      - type: json_parser
-        parse_from: body
   hostmetrics:
     collection_interval: 60m
     scrapers:
@@ -34,6 +31,7 @@ receivers:
             enabled: false
           system.filesystem.utilization:
             enabled: true
+      network:
 
 processors:
   memory_limiter:
