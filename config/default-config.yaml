@@ -53,8 +53,6 @@ processors:
           enabled: true
         host.cpu.model.name:
           enabled: true
-        os.description:
-          enabled: true
         os.version:
           enabled: true
   attributes:

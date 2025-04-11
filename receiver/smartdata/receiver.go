@@ -81,12 +81,7 @@ func (smartdataReceiver *smartdataReceiver) collectAndSendSMARTData(ctx context.
 
 	// Set resource attributes (common metadata)
 	resource := resourceSpans.Resource()
-	resource.Attributes().PutStr("service.name", "smart-data-scraper")
-	resource.Attributes().PutStr("host.name", getHostname())
-
-	scopeSpans := resourceSpans.ScopeSpans().AppendEmpty()
-	scopeSpans.Scope().SetName("io.opentelemetry.smart-data")
-	scopeSpans.Scope().SetVersion("1.0.0")
+	resource.Attributes().PutStr("service.name", "smart-data-receiver")
 
 	// Collect machine info
 	machineInfo, err := getMachineInfo()
@@ -95,6 +90,9 @@ func (smartdataReceiver *smartdataReceiver) collectAndSendSMARTData(ctx context.
 	}
 	machineInfoBytes, _ := json.Marshal(machineInfo)
 
+	scopeSpans := resourceSpans.ScopeSpans().AppendEmpty()
+	scopeSpans.Scope().SetName("smart-data-collection")
+	scopeSpans.Scope().SetVersion("1.0.0")
 	// Collect smart data for each disk
 	for _, disk := range disks {
 		smartdataReceiver.logger.Debug("collecting SMART data for disk", zap.String("disk", disk))
@@ -204,14 +202,4 @@ func NewSpanID() pcommon.SpanID {
 	spanID := pcommon.SpanID(sid)
 
 	return spanID
-}
-
-// getHostname returns the hostname of the system
-func getHostname() string {
-	cmd := exec.Command("hostname")
-	output, err := cmd.Output()
-	if err != nil {
-		return "unknown"
-	}
-	return strings.TrimSpace(string(output))
 }
