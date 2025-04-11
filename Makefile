@@ -6,6 +6,5 @@ azl-otelcol:
 	mkdir -p bin
 	go build -o bin/azl-otelcol $(MODFLAGS) -ldflags="$(LDFLAGS)" -trimpath -tags "$(BUILDTAGS)" .
 
-# Clean build artifacts
 clean:
 	rm -f bin/azl-otelcol

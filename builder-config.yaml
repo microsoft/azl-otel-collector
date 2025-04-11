@@ -4,7 +4,9 @@ replaces:
 dist:
   name: azl-otelcol
   description: Azure Linux OpenTelemetry Collector Distribution
-  output_path: ./azl-otelcol
+  output_path: .
+  version: 0.1.0
+otelcol_version: 0.123.0
 
 extensions:
   - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/extension/azureauthextension v0.123.0

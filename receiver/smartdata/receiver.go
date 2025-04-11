@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 package smartdata
 
 import (
@@ -41,10 +44,10 @@ func (smartdataReceiver *smartdataReceiver) Start(ctx context.Context, host comp
 		for {
 			select {
 			case <-ticker.C:
-				smartdataReceiver.logger.Info("Collecting SMART data from machine")
+				smartdataReceiver.logger.Info("collecting SMART data from machine")
 				err := smartdataReceiver.collectAndSendSMARTData(ctx)
 				if err != nil {
-					smartdataReceiver.logger.Error("Failed to collect SMART data", zap.Error(err))
+					smartdataReceiver.logger.Error("failed to collect SMART data", zap.Error(err))
 				}
 			case <-ctx.Done():
 				return
@@ -81,7 +84,7 @@ func (smartdataReceiver *smartdataReceiver) getMachineDisks() ([]string, error) 
 	}
 
 	// log the disks found
-	smartdataReceiver.logger.Debug("Found disks", zap.Any("disks", result.BlockDevices))
+	smartdataReceiver.logger.Debug("found disks", zap.Any("disks", result.BlockDevices))
 
 	disks := make([]string, 0, len(result.BlockDevices))
 	for _, disk := range result.BlockDevices {
@@ -136,7 +139,7 @@ func (smartdataReceiver *smartdataReceiver) collectAndSendSMARTData(ctx context.
 	}
 
 	// log the number of disks
-	smartdataReceiver.logger.Info("Found disks", zap.Int("diskCount", len(disks)))
+	smartdataReceiver.logger.Info("found disks", zap.Int("diskCount", len(disks)))
 
 	traces := ptrace.NewTraces()
 	traceID := pcommon.TraceID(uuid.New())
@@ -154,17 +157,17 @@ func (smartdataReceiver *smartdataReceiver) collectAndSendSMARTData(ctx context.
 	// Collect machine info
 	machineInfo, err := getMachineInfo()
 	if err != nil {
-		smartdataReceiver.logger.Warn("Failed to collect machine info", zap.Error(err))
+		smartdataReceiver.logger.Warn("failed to collect machine info", zap.Error(err))
 	}
 	machineInfoBytes, _ := json.Marshal(machineInfo)
 
 	// Collect smart data for each disk
 	for _, disk := range disks {
-		smartdataReceiver.logger.Debug("Collecting SMART data for disk", zap.String("disk", disk))
+		smartdataReceiver.logger.Debug("collecting SMART data for disk", zap.String("disk", disk))
 
 		smartData, err := smartdataReceiver.getSMARTData(disk)
 		if err != nil {
-			smartdataReceiver.logger.Warn("Failed to collect SMART data for disk",
+			smartdataReceiver.logger.Warn("failed to collect SMART data for disk",
 				zap.String("disk", disk), zap.Error(err))
 			continue
 		}
@@ -186,7 +189,7 @@ func (smartdataReceiver *smartdataReceiver) collectAndSendSMARTData(ctx context.
 		return fmt.Errorf("failed to send traces: %w", err)
 	}
 
-	smartdataReceiver.logger.Info("Successfully collected and sent SMART data",
+	smartdataReceiver.logger.Info("successfully collected and sent SMART data",
 		zap.Int("diskCount", len(disks)))
 	return nil
 }
