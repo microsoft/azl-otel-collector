@@ -60,7 +60,7 @@ processors:
   attributes:
     actions:
       - key: "collector.version"
-        value: "azl-otel-collector-0.123.0"
+        value: "azl-otel-collector-0.1.0"
         action: insert
   batch:
 

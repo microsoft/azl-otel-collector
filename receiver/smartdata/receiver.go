@@ -65,72 +65,6 @@ func (smartdataReceiver *smartdataReceiver) Shutdown(ctx context.Context) error 
 	return nil
 }
 
-// getMachineDisks returns a list of disks on the system
-func (smartdataReceiver *smartdataReceiver) getMachineDisks() ([]string, error) {
-	cmd := exec.Command("lsblk", "--nodeps", "--output", "NAME", "--json")
-	output, err := cmd.Output()
-	if err != nil {
-		return nil, fmt.Errorf("error running lsblk: %w", err)
-	}
-
-	var result struct {
-		BlockDevices []struct {
-			Name string `json:"name"`
-		} `json:"blockdevices"`
-	}
-
-	if err := json.Unmarshal(output, &result); err != nil {
-		return nil, fmt.Errorf("error parsing lsblk output: %w", err)
-	}
-
-	// log the disks found
-	smartdataReceiver.logger.Debug("found disks", zap.Any("disks", result.BlockDevices))
-
-	disks := make([]string, 0, len(result.BlockDevices))
-	for _, disk := range result.BlockDevices {
-		disks = append(disks, "/dev/"+disk.Name)
-	}
-
-	return disks, nil
-}
-
-// getSMARTData collects SMART data for a single disk
-func (smartdataReceiver *smartdataReceiver) getSMARTData(disk string) (json.RawMessage, error) {
-	cmd := exec.Command("smartctl", "--all", "--json", disk)
-	output, err := cmd.CombinedOutput()
-	if err != nil {
-		return nil, fmt.Errorf("failed to run smartctl on %s: %w", disk, err)
-	}
-
-	return json.RawMessage(output), nil
-}
-
-// getMachineInfo retrieves machine information from the host.
-func getMachineInfo() (MachineInfo, error) {
-	var machineInfo MachineInfo
-	readAndTrim := func(path string) (string, error) {
-		data, err := os.ReadFile(path)
-		if err != nil {
-			return "", fmt.Errorf("failed to read %s: %w", path, err)
-		}
-		return strings.TrimSpace(string(data)), nil
-	}
-	var err error
-	machineInfo.UUID, err = readAndTrim(ProductUUIDPath)
-	if err != nil {
-		return machineInfo, err
-	}
-	machineInfo.Manufacturer, err = readAndTrim(ProductManufacturerPath)
-	if err != nil {
-		return machineInfo, err
-	}
-	machineInfo.ModelNumber, err = readAndTrim(ProductModelNumberPath)
-	if err != nil {
-		return machineInfo, err
-	}
-	return machineInfo, nil
-}
-
 // collectAndSendSMARTData collects SMART data from all disks and sends it as traces
 func (smartdataReceiver *smartdataReceiver) collectAndSendSMARTData(ctx context.Context) error {
 	disks, err := smartdataReceiver.getMachineDisks()
@@ -192,6 +126,72 @@ func (smartdataReceiver *smartdataReceiver) collectAndSendSMARTData(ctx context.
 	smartdataReceiver.logger.Info("successfully collected and sent SMART data",
 		zap.Int("diskCount", len(disks)))
 	return nil
+}
+
+// getSMARTData collects SMART data for a single disk
+func (smartdataReceiver *smartdataReceiver) getSMARTData(disk string) (json.RawMessage, error) {
+	cmd := exec.Command("smartctl", "--all", "--json", disk)
+	output, err := cmd.CombinedOutput()
+	if err != nil {
+		return nil, fmt.Errorf("failed to run smartctl on %s: %w", disk, err)
+	}
+
+	return json.RawMessage(output), nil
+}
+
+// getMachineDisks returns a list of disks on the system
+func (smartdataReceiver *smartdataReceiver) getMachineDisks() ([]string, error) {
+	cmd := exec.Command("lsblk", "--nodeps", "--output", "NAME", "--json")
+	output, err := cmd.Output()
+	if err != nil {
+		return nil, fmt.Errorf("error running lsblk: %w", err)
+	}
+
+	var result struct {
+		BlockDevices []struct {
+			Name string `json:"name"`
+		} `json:"blockdevices"`
+	}
+
+	if err := json.Unmarshal(output, &result); err != nil {
+		return nil, fmt.Errorf("error parsing lsblk output: %w", err)
+	}
+
+	// log the disks found
+	smartdataReceiver.logger.Debug("found disks", zap.Any("disks", result.BlockDevices))
+
+	disks := make([]string, 0, len(result.BlockDevices))
+	for _, disk := range result.BlockDevices {
+		disks = append(disks, "/dev/"+disk.Name)
+	}
+
+	return disks, nil
+}
+
+// getMachineInfo retrieves machine information from the host.
+func getMachineInfo() (MachineInfo, error) {
+	var machineInfo MachineInfo
+	readAndTrim := func(path string) (string, error) {
+		data, err := os.ReadFile(path)
+		if err != nil {
+			return "", fmt.Errorf("failed to read %s: %w", path, err)
+		}
+		return strings.TrimSpace(string(data)), nil
+	}
+	var err error
+	machineInfo.UUID, err = readAndTrim(ProductUUIDPath)
+	if err != nil {
+		return machineInfo, err
+	}
+	machineInfo.Manufacturer, err = readAndTrim(ProductManufacturerPath)
+	if err != nil {
+		return machineInfo, err
+	}
+	machineInfo.ModelNumber, err = readAndTrim(ProductModelNumberPath)
+	if err != nil {
+		return machineInfo, err
+	}
+	return machineInfo, nil
 }
 
 func NewSpanID() pcommon.SpanID {
