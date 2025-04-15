@@ -29,6 +29,7 @@ type smartdataReceiver struct {
 	logger       *zap.Logger
 	nextConsumer consumer.Traces
 	config       *Config
+	machineInfo  MachineInfo
 }
 
 // Start begins collecting SMART data at the configured interval
@@ -36,6 +37,13 @@ func (smartdataReceiver *smartdataReceiver) Start(ctx context.Context, host comp
 	smartdataReceiver.host = host
 	ctx = context.Background()
 	ctx, smartdataReceiver.cancel = context.WithCancel(ctx)
+
+	// Only collect machine info once to use for all data collection
+	machineInfo, err := getMachineInfo()
+	if err != nil {
+		smartdataReceiver.logger.Warn("failed to collect machine info", zap.Error(err))
+	}
+	smartdataReceiver.machineInfo = machineInfo
 
 	interval, _ := time.ParseDuration(smartdataReceiver.config.Interval)
 	go func() {
@@ -83,12 +91,7 @@ func (smartdataReceiver *smartdataReceiver) collectAndSendSMARTData(ctx context.
 	resource := resourceSpans.Resource()
 	resource.Attributes().PutStr("service.name", "smart-data-receiver")
 
-	// Collect machine info
-	machineInfo, err := getMachineInfo()
-	if err != nil {
-		smartdataReceiver.logger.Warn("failed to collect machine info", zap.Error(err))
-	}
-	machineInfoBytes, _ := json.Marshal(machineInfo)
+	machineInfoBytes, _ := json.Marshal(smartdataReceiver.machineInfo)
 
 	scopeSpans := resourceSpans.ScopeSpans().AppendEmpty()
 	scopeSpans.Scope().SetName("smart-data-collection")
