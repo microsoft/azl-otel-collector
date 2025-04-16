@@ -42,7 +42,7 @@ at least 1.23 or higher.
 1. **Build the Collector:** From the root directory of the repository, run the
    following command to build the collector:
     ```bash
-    make azl-otelcol
+    make build
     ```
     This will create a binary named `azl-otelcol` in the bin directory.
 2. **Run the Collector:** You can run the collector binary with an OTEL
@@ -57,14 +57,14 @@ The AZL OTEL Collector is based on the OpenTelemetry Collector and uses the OTEL
 Collector Builder (OCB) tool for updates. To update the collector components to
 a newer upstream version, run the following command:
 ```bash
-make run-ocb OCB_VERSION=<version>
+make update-sources OCB_VERSION=<version>
 ```
 This will download the associated version of the OCB binary and update the
 collector components to the specified version. The `OCB_VERSION` should be a
 valid version tag from the OpenTelemetry Collector GitHub repository. For
 example, to update to version `0.124.0`, run:
 ```bash
-make run-ocb OCB_VERSION=0.124.0
+make update-sources OCB_VERSION=0.124.0
 ```
 The OCB tool uses the builder-config.yaml file to determine which components and
 versions to include in the collector. This file will be updated as part of the
