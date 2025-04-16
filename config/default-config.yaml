@@ -55,11 +55,6 @@ processors:
           enabled: true
         os.version:
           enabled: true
-  attributes:
-    actions:
-      - key: "collector.version"
-        value: "azl-otel-collector-0.1.0"
-        action: insert
   batch:
 
 exporters:
