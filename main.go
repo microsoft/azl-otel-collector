@@ -20,7 +20,7 @@ func main() {
 	info := component.BuildInfo{
 		Command:     "azl-otelcol",
 		Description: "Azure Linux OpenTelemetry Collector Distribution",
-		Version:     "0.1.0",
+		Version:     "0.124.0",
 	}
 
 	set := otelcol.CollectorSettings{
