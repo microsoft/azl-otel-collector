@@ -23,6 +23,11 @@ import (
 	"go.uber.org/zap"
 )
 
+const (
+	scopeSpanName = "smart-data-collection"
+	scopeVersion  = "1.0.0"
+)
+
 type smartdataReceiver struct {
 	host         component.Host
 	cancel       context.CancelFunc
@@ -94,8 +99,8 @@ func (smartdataReceiver *smartdataReceiver) collectAndSendSMARTData(ctx context.
 	machineInfoBytes, _ := json.Marshal(smartdataReceiver.machineInfo)
 
 	scopeSpans := resourceSpans.ScopeSpans().AppendEmpty()
-	scopeSpans.Scope().SetName("smart-data-collection")
-	scopeSpans.Scope().SetVersion("1.0.0")
+	scopeSpans.Scope().SetName(scopeSpanName)
+	scopeSpans.Scope().SetVersion(scopeVersion)
 	// Collect smart data for each disk
 	for _, disk := range disks {
 		smartdataReceiver.logger.Debug("collecting SMART data for disk", zap.String("disk", disk))

@@ -5,11 +5,11 @@ OCB_BIN ?= ./bin/ocb
 
 .PHONY: azl-otelcol run-ocb
 
-azl-otelcol:
+build:
 	mkdir -p bin
 	go build -o bin/azl-otelcol $(MODFLAGS) -ldflags="$(LDFLAGS)" -trimpath -tags "$(BUILDTAGS)" .
 
-run-ocb:
+update-sources:
 	@echo "Updating OTEL component versions in builder-config.yaml to $(OCB_VERSION)..."
 	@sed -i 's/0\.[0-9]\+\.[0-9]\+/$(OCB_VERSION)/g' builder-config.yaml
 	@echo "Downloading OCB version $(OCB_VERSION)..."
