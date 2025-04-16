@@ -34,7 +34,7 @@ type smartdataReceiver struct {
 	logger       *zap.Logger
 	nextConsumer consumer.Traces
 	config       *Config
-	machineInfo  MachineInfo
+	machineInfo  string
 }
 
 // Start begins collecting SMART data at the configured interval
@@ -48,7 +48,11 @@ func (smartdataReceiver *smartdataReceiver) Start(ctx context.Context, host comp
 	if err != nil {
 		smartdataReceiver.logger.Warn("failed to collect machine info", zap.Error(err))
 	}
-	smartdataReceiver.machineInfo = machineInfo
+	if bytes, err := json.Marshal(machineInfo); err == nil {
+		smartdataReceiver.machineInfo = string(bytes)
+	} else {
+		smartdataReceiver.logger.Warn("failed to marshal machine info", zap.Error(err))
+	}
 
 	interval, _ := time.ParseDuration(smartdataReceiver.config.Interval)
 	go func() {
@@ -95,8 +99,7 @@ func (smartdataReceiver *smartdataReceiver) collectAndSendSMARTData(ctx context.
 	// Set resource attributes (common metadata)
 	resource := resourceSpans.Resource()
 	resource.Attributes().PutStr("service.name", "smart-data-receiver")
-
-	machineInfoBytes, _ := json.Marshal(smartdataReceiver.machineInfo)
+	resource.Attributes().PutStr("machine.info", smartdataReceiver.machineInfo)
 
 	scopeSpans := resourceSpans.ScopeSpans().AppendEmpty()
 	scopeSpans.Scope().SetName(scopeSpanName)
@@ -119,8 +122,7 @@ func (smartdataReceiver *smartdataReceiver) collectAndSendSMARTData(ctx context.
 		diskSpan.SetKind(ptrace.SpanKindInternal)
 
 		// Set the span attributes that hold the actual data
-		diskSpan.Attributes().PutStr("machine-info", string(machineInfoBytes))
-		diskSpan.Attributes().PutStr("smart-data", string(smartData))
+		diskSpan.Attributes().PutStr("smart_data", string(smartData))
 	}
 
 	// Send the traces
