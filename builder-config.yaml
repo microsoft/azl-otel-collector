@@ -1,5 +1,5 @@
 replaces:
-  - "github.com/open-telemetry/opentelemetry-collector-contrib/receiver/smartdata => ./receiver/smartdata"
+  - "github.com/open-telemetry/opentelemetry-collector-contrib/receiver/smartdatareceiver => ./receiver/smartdatareceiver"
 
 dist:
   name: azl-otelcol
@@ -25,7 +25,7 @@ processors:
 
 receivers:
   - gomod: go.opentelemetry.io/collector/receiver/otlpreceiver v0.124.0
-  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/receiver/smartdata v0.124.0
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/receiver/smartdatareceiver v0.124.0
   - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/receiver/filelogreceiver v0.124.0
   - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/receiver/hostmetricsreceiver v0.124.0
   - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/receiver/journaldreceiver v0.124.0

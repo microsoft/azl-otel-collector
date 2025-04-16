@@ -1,41 +1,36 @@
 # Azure Linux OpenTelemetry Collector (AZL OTEL Collector)
 
-The **AZL OTEL Collector** is a custom OpenTelemetry Collector distribution maintained by the Azure Linux team. It is designed to provide observability and telemetry collection tailored for Azure Linux environments, with a curated set of receivers, processors, and exporters optimized for Azure workloads.
+The **AZL OTEL Collector** is a custom OpenTelemetry Collector distribution built by the Azure Linux team. It is designed to provide telemetry collection tailored for Azure Linux environments and scenarios, with a curated set of receivers, processors, and exporters from the upstream OpenTelemetry Collector and the OpenTelemetry Collector Contrib repository.
+This collector is built using the [OpenTelemetry Collector Builder (OCB)](https://github.com/open-telemetry/opentelemetry-collector/tree/main/cmd/builder) tool, which allows for easy customization and updates of the collector components.
 
-## Components List
+## Included Components
 
 **Receivers:**
-- otlpreceiver
-- filelogreceiver
-- hostmetricsreceiver
-- journaldreceiver
-- smartdatareceiver
+
+- [otlpreceiver](https://github.com/open-telemetry/opentelemetry-collector/tree/main/receiver/otlpreceiver)
+- [filelogreceiver](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/filelogreceiver)
+- [hostmetricsreceiver](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/hostmetricsreceiver)
+- [journaldreceiver](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/journaldreceiver)
+- [smartdatareceiver](https://github.com/microsoft/azl-otel-collector/tree/main/receiver/smartdatareceiver)
 
 **Processors:**
-- batchprocessor
-- memorylimiterprocessor
-- attributesprocessor
-- filterprocessor
-- resourcedetectionprocessor
+- [batchprocessor](https://github.com/open-telemetry/opentelemetry-collector/tree/main/processor/batchprocessor)
+- [memorylimiterprocessor](https://github.com/open-telemetry/opentelemetry-collector/tree/main/processor/memorylimiterprocessor)
+- [attributesprocessor](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/processor/attributesprocessor)
+- [filterprocessor](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/processor/filterprocessor)
+- [resourcedetectionprocessor](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/processor/resourcedetectionprocessor)
 
 **Exporters:**
-- debugexporter
-- otlpexporter
-- fileexporter
-- azuredataexplorerexporter
-
-**Providers:**
-- envprovider
-- fileprovider
-- httpprovider
-- httpsprovider
-- yamlprovider
+- [debugexporter](https://github.com/open-telemetry/opentelemetry-collector/tree/main/exporter/debugexporter)
+- [otlpexporter](https://github.com/open-telemetry/opentelemetry-collector/tree/main/exporter/otlpexporter)
+- [fileexporter](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/exporter/fileexporter)
+- [azuredataexplorerexporter](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/exporter/azuredataexplorerexporter)
 
 
 ## Building the Collector
 
 1. **Build the Collector:**  
-   Use the Makefile to build the collector and manage dependencies.
+   From the root directory of the repository, run the following command to build the collector:
     ```bash
     make azl-otelcol
     ```
@@ -51,12 +46,12 @@ The AZL OTEL Collector is based on the OpenTelemetry Collector and uses the OTEL
 ```bash
 make run-ocb OCB_VERSION=<version>
 ```
-This will download the OCB binary and update the collector components to the specified version. The `OCB_VERSION` should be a valid version tag from the OpenTelemetry Collector GitHub repository.
+This will download the associated version of the OCB binary and update the collector components to the specified version. The `OCB_VERSION` should be a valid version tag from the OpenTelemetry Collector GitHub repository.
 For example, to update to version `0.124.0`, run:
 ```bash
 make run-ocb OCB_VERSION=0.124.0
 ```
-The OCB tool uses the builder-config.yaml file to determine which components and versions to include in the collector. This file gets updated as part of the update command.
+The OCB tool uses the builder-config.yaml file to determine which components and versions to include in the collector. This file will be updated as part of the process.
 
 ## Support
 

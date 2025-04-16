@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-package smartdata
+package smartdatareceiver
 
 // Machine ID constants
 const (

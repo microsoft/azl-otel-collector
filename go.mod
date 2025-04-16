@@ -13,7 +13,7 @@ require (
 	github.com/open-telemetry/opentelemetry-collector-contrib/receiver/filelogreceiver v0.124.0
 	github.com/open-telemetry/opentelemetry-collector-contrib/receiver/hostmetricsreceiver v0.124.0
 	github.com/open-telemetry/opentelemetry-collector-contrib/receiver/journaldreceiver v0.124.0
-	github.com/open-telemetry/opentelemetry-collector-contrib/receiver/smartdata v0.124.0
+	github.com/open-telemetry/opentelemetry-collector-contrib/receiver/smartdatareceiver v0.124.0
 	go.opentelemetry.io/collector/component v1.30.0
 	go.opentelemetry.io/collector/confmap v1.30.0
 	go.opentelemetry.io/collector/confmap/provider/envprovider v1.18.0
@@ -32,7 +32,6 @@ require (
 	go.opentelemetry.io/collector/processor/memorylimiterprocessor v0.124.0
 	go.opentelemetry.io/collector/receiver v1.30.0
 	go.opentelemetry.io/collector/receiver/otlpreceiver v0.124.0
-	golang.org/x/sys v0.32.0
 )
 
 require (
@@ -273,6 +272,7 @@ require (
 	golang.org/x/exp v0.0.0-20250106191152-7588d65b2ba8 // indirect
 	golang.org/x/net v0.39.0 // indirect
 	golang.org/x/oauth2 v0.28.0 // indirect
+	golang.org/x/sys v0.32.0 // indirect
 	golang.org/x/term v0.31.0 // indirect
 	golang.org/x/text v0.24.0 // indirect
 	golang.org/x/time v0.7.0 // indirect
@@ -297,4 +297,4 @@ require (
 	sigs.k8s.io/yaml v1.4.0 // indirect
 )
 
-replace github.com/open-telemetry/opentelemetry-collector-contrib/receiver/smartdata => ./receiver/smartdata
+replace github.com/open-telemetry/opentelemetry-collector-contrib/receiver/smartdatareceiver => ./receiver/smartdatareceiver

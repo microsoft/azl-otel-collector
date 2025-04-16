@@ -20,7 +20,7 @@ import (
 	filterprocessor "github.com/open-telemetry/opentelemetry-collector-contrib/processor/filterprocessor"
 	resourcedetectionprocessor "github.com/open-telemetry/opentelemetry-collector-contrib/processor/resourcedetectionprocessor"
 	otlpreceiver "go.opentelemetry.io/collector/receiver/otlpreceiver"
-	smartdata "github.com/open-telemetry/opentelemetry-collector-contrib/receiver/smartdata"
+	smartdatareceiver "github.com/open-telemetry/opentelemetry-collector-contrib/receiver/smartdatareceiver"
 	filelogreceiver "github.com/open-telemetry/opentelemetry-collector-contrib/receiver/filelogreceiver"
 	hostmetricsreceiver "github.com/open-telemetry/opentelemetry-collector-contrib/receiver/hostmetricsreceiver"
 	journaldreceiver "github.com/open-telemetry/opentelemetry-collector-contrib/receiver/journaldreceiver"
@@ -39,7 +39,7 @@ func components() (otelcol.Factories, error) {
 
 	factories.Receivers, err = otelcol.MakeFactoryMap[receiver.Factory](
 		otlpreceiver.NewFactory(),
-		smartdata.NewFactory(),
+		smartdatareceiver.NewFactory(),
 		filelogreceiver.NewFactory(),
 		hostmetricsreceiver.NewFactory(),
 		journaldreceiver.NewFactory(),
@@ -49,7 +49,7 @@ func components() (otelcol.Factories, error) {
 	}
 	factories.ReceiverModules = make(map[component.Type]string, len(factories.Receivers))
 	factories.ReceiverModules[otlpreceiver.NewFactory().Type()] = "go.opentelemetry.io/collector/receiver/otlpreceiver v0.124.0"
-	factories.ReceiverModules[smartdata.NewFactory().Type()] = "github.com/open-telemetry/opentelemetry-collector-contrib/receiver/smartdata v0.124.0"
+	factories.ReceiverModules[smartdatareceiver.NewFactory().Type()] = "github.com/open-telemetry/opentelemetry-collector-contrib/receiver/smartdatareceiver v0.124.0"
 	factories.ReceiverModules[filelogreceiver.NewFactory().Type()] = "github.com/open-telemetry/opentelemetry-collector-contrib/receiver/filelogreceiver v0.124.0"
 	factories.ReceiverModules[hostmetricsreceiver.NewFactory().Type()] = "github.com/open-telemetry/opentelemetry-collector-contrib/receiver/hostmetricsreceiver v0.124.0"
 	factories.ReceiverModules[journaldreceiver.NewFactory().Type()] = "github.com/open-telemetry/opentelemetry-collector-contrib/receiver/journaldreceiver v0.124.0"

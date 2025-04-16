@@ -1,4 +1,4 @@
-module github.com/open-telemetry/opentelemetry-collector-contrib/receiver/smartdata
+module github.com/open-telemetry/opentelemetry-collector-contrib/receiver/smartdatareceiver
 
 go 1.24.2
 
