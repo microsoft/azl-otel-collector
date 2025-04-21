@@ -55,6 +55,8 @@ processors:
           enabled: true
         os.version:
           enabled: true
+        host.name:
+          enabled: false
   batch:
 
 exporters:
