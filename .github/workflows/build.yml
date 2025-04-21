@@ -1,0 +1,58 @@
+name: build
+
+permissions:
+  contents: read
+
+on:
+  push:
+    branches: [main, release/*]
+  pull_request:
+    branches: [main, release/*]
+  workflow_dispatch: {}
+  
+env:
+  EXPECTED_GO_VERSION: "1.24.2"
+
+jobs:
+  build:
+    name: go build and validate
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v4
+
+    - name: setup go 1.x
+      uses: actions/setup-go@v5
+      with:
+        go-version: "${{ env.EXPECTED_GO_VERSION }}"
+      id: go
+
+    - name: check active go version
+      run: |
+        go version && which go
+    
+    - name: check go.mod
+      run: |
+        if grep -q "go $EXPECTED_GO_VERSION" ./cmd/azl-otelcol/go.mod; then
+          echo "go.mod has correct version ($EXPECTED_GO_VERSION)"
+        else
+          actual_version="$(grep -E '^go [0-9]+\.[0-9]+' ./cmd/azl-otelcol/go.mod)"
+          echo "go.mod has bad version expected:$EXPECTED_GO_VERSION, found: $actual_version"
+          echo "UPDATE prerequisite documentation if minimum go version changed"
+          exit 1
+        fi
+
+    - name: check smartdatareceiver go.mod
+      run: |
+        if grep -q "go $EXPECTED_GO_VERSION" ./cmd/azl-otelcol/receiver/smartdatareceiver/go.mod; then
+          echo "receiver go.mod has correct version ($EXPECTED_GO_VERSION)"
+        else
+          actual_version_receiver="$(grep -E '^go [0-9]+\.[0-9]+' ./cmd/azl-otelcol/receiver/smartdatareceiver/go.mod)"
+          echo "smartdatareceiver go.mod has bad version expected:$EXPECTED_GO_VERSION, found: $actual_version_receiver"
+          echo "UPDATE receiver module go.mod to match minimum Go version"
+          exit 1
+        fi
+
+    - name: build
+      run: |
+        sudo env "PATH=$PATH" make build
