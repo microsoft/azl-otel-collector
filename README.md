@@ -37,7 +37,7 @@ components.
 ## Building the Collector
 
 Note: Ensure you have Go installed on your machine. The version of Go should be
-at least 1.23 or higher.
+at least 1.24 or higher.
 
 1. **Build the Collector:** From the root directory of the repository, run the
    following command to build the collector:
