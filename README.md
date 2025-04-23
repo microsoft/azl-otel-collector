@@ -1,5 +1,9 @@
 # Azure Linux OpenTelemetry Collector (AZL OTEL Collector)
 
+[![build](https://github.com/microsoft/azl-otel-collector/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/microsoft/azl-otel-collector/actions/workflows/build.yml)
+![GitHub release (latest
+SemVer)](https://img.shields.io/github/v/release/microsoft/azl-otel-collector?sort=semver)
+
 The **AZL OTEL Collector** is a custom OpenTelemetry Collector distribution
 built by the Azure Linux team. It is designed to provide telemetry collection
 tailored for Azure Linux environments and scenarios, with a curated set of
@@ -18,7 +22,7 @@ components.
 - [filelogreceiver](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/filelogreceiver)
 - [hostmetricsreceiver](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/hostmetricsreceiver)
 - [journaldreceiver](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/journaldreceiver)
-- [smartdatareceiver](https://github.com/microsoft/azl-otel-collector/tree/main/receiver/smartdatareceiver)
+- [smartdatareceiver](https://github.com/microsoft/azl-otel-collector/tree/main/cmd/azl-otelcol/receiver/smartdatareceiver)
 
 **Processors:**
 - [batchprocessor](https://github.com/open-telemetry/opentelemetry-collector/tree/main/processor/batchprocessor)
