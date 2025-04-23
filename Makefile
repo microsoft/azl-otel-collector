@@ -20,6 +20,7 @@ update-sources:
 	@echo "Running OCB..."
 	@cd cmd/azl-otelcol && ../../bin/ocb --config builder-config.yaml --skip-compilation
 	@rm -f cmd/azl-otelcol/main_windows.go
+	@cd cmd/azl-otelcol/receiver/smartdatareceiver && go mod tidy
 	@cd cmd/azl-otelcol && go mod tidy
 
 clean:
