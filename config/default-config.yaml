@@ -75,15 +75,15 @@ service:
   pipelines:
     traces:
       receivers: [otlp, smartdata]
-      processors: [memory_limiter, filter, resourcedetection, attributes, batch]
+      processors: [memory_limiter, filter, resourcedetection, batch]
       exporters: [debug, azuredataexplorer]
     metrics:
       receivers: [otlp, hostmetrics]
-      processors: [memory_limiter, filter, resourcedetection, attributes, batch]
+      processors: [memory_limiter, filter, resourcedetection, batch]
       exporters: [debug, azuredataexplorer]
     logs:
       receivers: [otlp, filelog]
-      processors: [memory_limiter, filter, resourcedetection, attributes, batch]
+      processors: [memory_limiter, filter, resourcedetection, batch]
       exporters: [debug, azuredataexplorer]
   telemetry:
     logs:
