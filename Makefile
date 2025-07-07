@@ -1,6 +1,6 @@
 # Makefile for Azure Linux OpenTelemetry Collector
 
-OCB_VERSION ?= 0.124.0
+OCB_VERSION ?= 0.129.0
 OCB_BIN ?= ./bin/ocb
 
 .PHONY: build update-sources clean

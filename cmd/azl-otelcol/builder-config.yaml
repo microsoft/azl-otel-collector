@@ -5,34 +5,34 @@ dist:
   name: azl-otelcol
   description: Azure Linux OpenTelemetry Collector Distribution
   output_path: .
-  version: 0.127.0
-otelcol_version: 0.127.0
+  version: 0.129.0
+otelcol_version: 0.129.0
 
 extensions:
 
 exporters:
-  - gomod: go.opentelemetry.io/collector/exporter/debugexporter v0.127.0
-  - gomod: go.opentelemetry.io/collector/exporter/otlpexporter v0.127.0
-  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/exporter/fileexporter v0.127.0
-  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/exporter/azuredataexplorerexporter v0.127.0
+  - gomod: go.opentelemetry.io/collector/exporter/debugexporter v0.129.0
+  - gomod: go.opentelemetry.io/collector/exporter/otlpexporter v0.129.0
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/exporter/fileexporter v0.129.0
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/exporter/azuredataexplorerexporter v0.129.0
 
 processors:
-  - gomod: go.opentelemetry.io/collector/processor/batchprocessor v0.127.0
-  - gomod: go.opentelemetry.io/collector/processor/memorylimiterprocessor v0.127.0
-  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/processor/attributesprocessor v0.127.0
-  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/processor/filterprocessor v0.127.0
-  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/processor/resourcedetectionprocessor v0.127.0
+  - gomod: go.opentelemetry.io/collector/processor/batchprocessor v0.129.0
+  - gomod: go.opentelemetry.io/collector/processor/memorylimiterprocessor v0.129.0
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/processor/attributesprocessor v0.129.0
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/processor/filterprocessor v0.129.0
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/processor/resourcedetectionprocessor v0.129.0
 
 receivers:
-  - gomod: go.opentelemetry.io/collector/receiver/otlpreceiver v0.127.0
-  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/receiver/smartdatareceiver v0.127.0
-  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/receiver/filelogreceiver v0.127.0
-  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/receiver/hostmetricsreceiver v0.127.0
-  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/receiver/journaldreceiver v0.127.0
+  - gomod: go.opentelemetry.io/collector/receiver/otlpreceiver v0.129.0
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/receiver/smartdatareceiver v0.129.0
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/receiver/filelogreceiver v0.129.0
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/receiver/hostmetricsreceiver v0.129.0
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/receiver/journaldreceiver v0.129.0
 
 providers:
-  - gomod: go.opentelemetry.io/collector/confmap/provider/envprovider v1.18.0
-  - gomod: go.opentelemetry.io/collector/confmap/provider/fileprovider v1.18.0
-  - gomod: go.opentelemetry.io/collector/confmap/provider/httpprovider v1.18.0
-  - gomod: go.opentelemetry.io/collector/confmap/provider/httpsprovider v1.18.0
-  - gomod: go.opentelemetry.io/collector/confmap/provider/yamlprovider v1.18.0
+  - gomod: go.opentelemetry.io/collector/confmap/provider/envprovider v1.30.0
+  - gomod: go.opentelemetry.io/collector/confmap/provider/fileprovider v1.30.0
+  - gomod: go.opentelemetry.io/collector/confmap/provider/httpprovider v1.30.0
+  - gomod: go.opentelemetry.io/collector/confmap/provider/httpsprovider v1.30.0
+  - gomod: go.opentelemetry.io/collector/confmap/provider/yamlprovider v1.30.0
